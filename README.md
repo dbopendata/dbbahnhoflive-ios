@@ -1,4 +1,4 @@
-# dbbahnhoflive-android
+# dbbahnhoflive-ios
 
 DB Bahnhof live ist ein Produkt der DB Station&Service AG. Als Tochterfirmader Deutschen Bahn sind wir deutschlandweit verantwortlich für den Betrieb und die Wartung von Bahnhöfen und Haltestellen. Mit rund 5.400 Bahnhöfenund mehr als 20 Millionen Reisenden pro Tag sind wir Deutschlands größterGastgeber. Mit Hilfe der App DB Bahnhof live unterstützen wir Reisende und Besucher, ihren Aufenthalt an unseren Bahnhöfen so angenehm und effizient wie möglich zu gestalten.
 
