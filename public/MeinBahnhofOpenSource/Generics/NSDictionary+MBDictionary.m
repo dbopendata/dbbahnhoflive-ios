@@ -36,6 +36,14 @@
         return something;
     return nil;
 }
+-(BOOL)db_boolForKey:(NSString *)key{
+    NSNumber* num = [self db_numberForKey:key];
+    if(num){
+        return [num boolValue];
+    }
+    return false;
+}
+
 
 -(NSNumber *)db_stringForKey:(NSString *)key{
     if(![self isKindOfClass:NSDictionary.class])

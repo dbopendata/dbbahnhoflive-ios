@@ -27,6 +27,7 @@ typedef NS_ENUM(NSUInteger, MBNewsType) {
 -(nullable UIImage*)image;
 -(MBNewsType)newsType;
 -(NSString*)title;
+-(NSString* _Nullable)subtitle;
 -(NSString*)content;
 -(NSString*)link;
 -(BOOL)hasLink;

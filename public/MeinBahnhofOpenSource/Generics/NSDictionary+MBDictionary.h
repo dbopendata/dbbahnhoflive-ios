@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(NSDictionary*)db_dictForKey:(NSString*)key;
 -(NSString*)db_stringForKey:(NSString*)key;
 -(NSNumber*)db_numberForKey:(NSString*)key;
+-(BOOL)db_boolForKey:(NSString*)key;
 
 
 @end

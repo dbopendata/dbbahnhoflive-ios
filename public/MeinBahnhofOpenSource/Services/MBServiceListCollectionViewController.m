@@ -204,7 +204,7 @@ static NSString * const kServiceCollectionViewCellReuseIdentifier = @"Cell";
 
 -(void)prepareForDisplay{
     if(self.isPrepared){
-        return;
+        //return;
     }
     
     self.pxrCategories = _station.riPoiCategories;

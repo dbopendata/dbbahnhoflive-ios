@@ -852,7 +852,10 @@ static const NSInteger skyHighLevel = 13;//changed from 14
     [allOutdoorMarker addObjectsFromArray:self.facilityMarker];
     //parking
     for (MBParkingInfo* parking in self.station.parkingInfoItems) {
-        [allOutdoorMarker addObject:[parking markerForParkingWithSelectable:YES]];
+        MBMarker* m = [parking markerForParkingWithSelectable:YES];
+        if(m){
+            [allOutdoorMarker addObject:m];
+        }
     }
     
     [allOutdoorMarker addObjectsFromArray:self.mobilityMarker];

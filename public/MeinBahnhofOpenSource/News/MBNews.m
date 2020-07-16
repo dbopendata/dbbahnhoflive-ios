@@ -7,6 +7,7 @@
 //
 
 #import "MBNews.h"
+#import "NSDictionary+MBDictionary.h"
 
 @interface MBNews()
 @property(nonatomic,strong) NSDate* endTimestamp;
@@ -16,6 +17,7 @@
 @property(nonatomic) NSInteger groupId;
 
 @property(nonatomic,strong) NSString* title;
+@property(nonatomic,strong) NSString* subtitle;
 @property(nonatomic,strong) NSString* content;
 @property(nonatomic,strong) NSString* link;
 @property(nonatomic,strong) NSString* imageBase64;
@@ -43,7 +45,7 @@ static NSArray<NSNumber*>* groupSortOrder = nil;
 - (BOOL)validWithData:(NSDictionary *)json{
     if([json isKindOfClass:[NSDictionary class]] && [self sharedFormatter]){
         //is it published?
-        if(![json[@"published"] boolValue]){
+        if(![json db_boolForKey:@"published"]){
             if(DEBUG_LOAD_UNPUBLISHED_NEWS){
                 //ignore
             } else {
@@ -52,7 +54,7 @@ static NSArray<NSNumber*>* groupSortOrder = nil;
         }
         
         //is it outdated?
-        NSString* end = json[@"endTimestamp"];
+        NSString* end = [json db_stringForKey:@"endTimestamp"];
         if(!end){
             return NO;
         }
@@ -62,11 +64,11 @@ static NSArray<NSNumber*>* groupSortOrder = nil;
         }
         
         //is it one of our known groups?
-        NSDictionary* group = json[@"group"];
-        if(!group || ![group isKindOfClass:NSDictionary.class]){
+        NSDictionary* group = [json db_dictForKey:@"group"];
+        if(!group){
             return NO;
         }
-        NSInteger groupId = [group[@"id"] integerValue];
+        NSInteger groupId = [[group db_numberForKey:@"id"] integerValue];
         if(groupId == MBNewsTypeOffer
            || groupId == MBNewsTypeDisruption
            || groupId == MBNewsTypePoll
@@ -76,21 +78,22 @@ static NSArray<NSNumber*>* groupSortOrder = nil;
             return NO;
         }
 
-        NSDictionary* optionalData = json[@"optionalData"];
-        self.link = optionalData[@"link"];
+        NSDictionary* optionalData = [json db_dictForKey:@"optionalData"];
+        self.link = [optionalData db_stringForKey:@"link"];
         if(self.hasLink && !self.isLinkValid){
             return NO;
         }
 
         //parse the rest of the fields that we use
-        self.startTimestamp = [newsDateFormatter dateFromString:json[@"startTimestamp"]];
-        self.updatedAtTimestamp = [newsDateFormatter dateFromString:json[@"updatedAt"]];
-        self.createdAtTimestamp = [newsDateFormatter dateFromString:json[@"createdAt"]];
-        self.title = json[@"title"];
-        self.content = json[@"content"];
+        self.startTimestamp = [newsDateFormatter dateFromString:[json db_stringForKey:@"startTimestamp"]];
+        self.updatedAtTimestamp = [newsDateFormatter dateFromString:[json db_stringForKey:@"updatedAt"]];
+        self.createdAtTimestamp = [newsDateFormatter dateFromString:[json db_stringForKey:@"createdAt"]];
+        self.title = [json db_stringForKey:@"title"];
+        self.subtitle = [json db_stringForKey:@"subtitle"];
+        self.content = [json db_stringForKey:@"content"];
         
-        if(self.newsType == MBNewsTypeOffer && json[@"image"]){
-            NSString* imgString = json[@"image"];
+        NSString* imgString = [json db_stringForKey:@"image"];
+        if(imgString){
             NSString* jpgPrefix = @"data:image/jpeg;base64,";
             NSString* pngPrefix = @"data:image/png;base64,";
             if([imgString hasPrefix:jpgPrefix]){
@@ -197,6 +200,7 @@ static NSArray<NSNumber*>* groupSortOrder = nil;
     n.startTimestamp = date;
     n.endTimestamp = [date dateByAddingTimeInterval:10*10*60];
     n.title = @"10s, type off";
+    n.subtitle = @"subtitle!";
     n.content = @"Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.";
     n.updatedAtTimestamp = [date dateByAddingTimeInterval:-10];
     n.groupId = MBNewsTypeOffer;
@@ -207,6 +211,7 @@ static NSArray<NSNumber*>* groupSortOrder = nil;
     n.startTimestamp = date;
     n.endTimestamp = [date dateByAddingTimeInterval:10*10*60];
     n.title = @"10s, type disr";
+    n.subtitle = @"subtitle long Lorem ipsum dolor sit amet Lorem ipsum Lorem ipsum dolor sit amet Lorem ipsum!";
     n.content = @"Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.";
     n.updatedAtTimestamp = [date dateByAddingTimeInterval:-10];
     n.groupId = MBNewsTypeDisruption;

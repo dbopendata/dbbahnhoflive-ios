@@ -377,10 +377,11 @@
 
 
 - (void)reloadStationData {
-    if(!self.opnvDataAvailable || !self.finishedAllLoading){
+    if(!self.opnvDataAvailable || !self.facilityDataAvailable || !self.stationDataAvailable){
         return;
     }
      NSLog(@"reloadStationData, isGreen %d",self.station.isGreenStation);
+    [self updateContainerFrames];
     // fill station info array
     // array has up to 4 items (arrays again)
     // each subarray has a dictionary for the content
@@ -931,6 +932,9 @@
         return;
     }
     self.stationDataAvailable = @(success);
+    
+    [self.tabBarViewController enableTabAtIndex:3];
+
 }
 
 -(void)hafasNearbyStationsRequest{
@@ -1039,13 +1043,13 @@
 -(void)didLoadFacilityData:(BOOL)success{
     // NSLog(@"didLoadFacilityData: %d",success);
     self.facilityDataAvailable = @(success);
+    [self reloadStationData];
 }
 
 
 -(void)didFinishAllLoading{
     NSLog(@"didFinishAllLoading");
     self.finishedAllLoading = YES;
-    [self.tabBarViewController enableTabAtIndex:3];//can we show this earlier?
     
     if(!self.stationDataAvailable.boolValue && self.station.stationEvaIds.count > 0){
         //PTS failed, but we got eva from rimaps
@@ -1059,7 +1063,6 @@
         [self hafasNearbyStationsRequest];
     }
     
-    [self updateContainerFrames];
     [self reloadStationData];
     [self.refresher endRefreshing];
 }

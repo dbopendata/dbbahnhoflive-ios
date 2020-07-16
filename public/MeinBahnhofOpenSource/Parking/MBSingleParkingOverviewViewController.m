@@ -207,12 +207,19 @@
     if(text.length == 0){
         return y;
     }
-    MBLabel *label = [MBLabel labelWithTitle:title andText:text];
+    MBLabel *label = [MBLabel labelWithTitle:title andText:@""];
     CGSize maxSize = CGSizeMake(self.contentView.frame.size.width - 32.0, CGFLOAT_MAX);
     CGSize wrappedSize = [label sizeThatFits:maxSize];
     label.frame = CGRectMake(16.0, y, wrappedSize.width, wrappedSize.height);
     [self.contentScrollView addSubview:label];
-    return label.frame.origin.y + label.frame.size.height + 16;
+    y = label.frame.origin.y + label.frame.size.height + 8;
+    
+    MBLabel *label2 = [MBLabel labelWithTitle:@"" andText:text];
+    maxSize = CGSizeMake(self.contentView.frame.size.width - 32.0, CGFLOAT_MAX);
+    wrappedSize = [label2 sizeThatFits:maxSize];
+    label2.frame = CGRectMake(16.0, y, wrappedSize.width, wrappedSize.height);
+    [self.contentScrollView addSubview:label2];
+    return label2.frame.origin.y + label2.frame.size.height + 16;
 }
 
 -(void)viewDidLayoutSubviews{

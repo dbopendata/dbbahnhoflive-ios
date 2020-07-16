@@ -536,6 +536,7 @@
 		42610DB1244F30B800E0B05C /* MBPTSRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBPTSRequestManager.m; sourceTree = "<group>"; };
 		42610DB2244F30B800E0B05C /* MBPTSTravelCenterRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBPTSTravelCenterRequestManager.m; sourceTree = "<group>"; };
 		4269354723C5E3A100B01A81 /* MeinBahnhofOpenSource.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeinBahnhofOpenSource.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		426B0020248A597D00FF1722 /* Bahnhof_live-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bahnhof_live-Bridging-Header.h"; sourceTree = "<group>"; };
 		42DAC5C5246D2AE90005CF64 /* MBParkingOccupancyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBParkingOccupancyManager.m; sourceTree = "<group>"; };
 		42DAC5C7246D2AEF0005CF64 /* MBParkingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBParkingManager.m; sourceTree = "<group>"; };
 		42DAC5C9246D2B090005CF64 /* NSDictionary+MBDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+MBDictionary.m"; sourceTree = "<group>"; };
@@ -597,6 +598,7 @@
 		4261052C244EF10F00E0B05C /* MeinBahnhofOpenSource */ = {
 			isa = PBXGroup;
 			children = (
+				426B0020248A597D00FF1722 /* Bahnhof_live-Bridging-Header.h */,
 				4261066C244EF11000E0B05C /* Info.plist */,
 				42610607244EF10F00E0B05C /* main.m */,
 				42610667244EF11000E0B05C /* PrefixHeader.pch */,
@@ -1223,6 +1225,7 @@
 				TargetAttributes = {
 					4269354623C5E3A100B01A81 = {
 						CreatedOnToolsVersion = 11.3;
+						LastSwiftMigration = 1150;
 					};
 				};
 			};
@@ -1632,6 +1635,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1642,8 +1646,12 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "opensource.Bahnhof-Live";
+				PRODUCT_MODULE_NAME = Bahnhof_live;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "MeinBahnhofOpenSource/Bahnhof_live-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1654,6 +1662,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1664,8 +1673,11 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "opensource.Bahnhof-Live";
+				PRODUCT_MODULE_NAME = Bahnhof_live;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "MeinBahnhofOpenSource/Bahnhof_live-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

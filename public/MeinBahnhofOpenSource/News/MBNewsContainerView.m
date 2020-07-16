@@ -143,7 +143,11 @@
 -(void)setNews:(MBNews *)news{
     _news = news;
     self.titleLabel.text = news.title;
-    self.contentLabel.text = news.content;
+    if(news.subtitle.length > 0){
+        self.contentLabel.text = news.subtitle;
+    } else {
+        self.contentLabel.text = news.content;
+    }
     NSString* iconName = nil;
     switch (news.newsType) {
         case MBNewsTypePoll:

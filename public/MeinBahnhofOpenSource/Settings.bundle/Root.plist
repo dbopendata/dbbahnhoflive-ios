@@ -18,7 +18,7 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Adobe Analytics</string>
+			<string>Analytics</string>
 			<key>Key</key>
 			<string>enabled_tracking</string>
 			<key>DefaultValue</key>

@@ -12,6 +12,7 @@
 @property(nonatomic,strong) UIScrollView* contentScrollView;
 
 @property(nonatomic,strong) UILabel* newsHeadlineLabel;
+@property(nonatomic,strong) UILabel* newsSubtitleLabel;
 @property(nonatomic,strong) UILabel* newsContentLabel;
 
 @end
@@ -35,6 +36,12 @@
     self.newsHeadlineLabel.numberOfLines = 0;
     self.newsHeadlineLabel.font = [UIFont db_BoldFourteen];
     self.newsHeadlineLabel.textColor = [UIColor db_333333];
+
+    self.newsSubtitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    [self.contentScrollView addSubview:self.newsSubtitleLabel];
+    self.newsSubtitleLabel.numberOfLines = 0;
+    self.newsSubtitleLabel.font = [UIFont db_RegularFourteen];
+    self.newsSubtitleLabel.textColor = [UIColor db_333333];
     
     self.newsContentLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [self.contentScrollView addSubview:self.newsContentLabel];
@@ -44,6 +51,7 @@
     
     //setup labels
     self.newsHeadlineLabel.text = self.news.title;
+    self.newsSubtitleLabel.text = self.news.subtitle;
     self.newsContentLabel.text = self.news.content;
     
     NSInteger contentWidth = self.view.frame.size.width-2*15;
@@ -53,12 +61,34 @@
     [self.newsHeadlineLabel setY:y];//there is a bug in the set frame method when using CGFLOAT_MAX for height the y value is ignored
     
     y = CGRectGetMaxY(self.newsHeadlineLabel.frame)+5;
+    
+    if(self.newsSubtitleLabel.text.length > 0){
+        self.newsSubtitleLabel.frame = CGRectMake(15, 0, contentWidth, CGFLOAT_MAX);
+        size = [self.newsSubtitleLabel sizeThatFits:CGSizeMake(self.newsSubtitleLabel.sizeWidth, CGFLOAT_MAX)];
+        [self.newsSubtitleLabel setSize:CGSizeMake(ceilf(size.width),ceilf(size.height))];
+        [self.newsSubtitleLabel setY:y];
+        y = CGRectGetMaxY(self.newsSubtitleLabel.frame)+20;
+    }
+    
     self.newsContentLabel.frame = CGRectMake(15, 0, contentWidth, CGFLOAT_MAX);
     size = [self.newsContentLabel sizeThatFits:CGSizeMake(self.newsContentLabel.sizeWidth, CGFLOAT_MAX)];
     [self.newsContentLabel setSize:CGSizeMake(ceilf(size.width),ceilf(size.height))];
     [self.newsContentLabel setY:y];
-    
     y = CGRectGetMaxY(self.newsContentLabel.frame)+20;
+    
+    //display of optional image
+    UIImage* image = self.news.image;
+    if(image){
+        UIImageView* imgView = [[UIImageView alloc] initWithImage:image];
+        [self.contentScrollView addSubview:imgView];
+        
+        if(imgView.frame.size.width > contentWidth){
+            [imgView setSize:CGSizeMake(contentWidth, (imgView.image.size.height/imgView.image.size.width)*contentWidth)];
+        }
+        [imgView centerViewHorizontalInSuperView];
+        [imgView setGravityTop:y];
+        y = CGRectGetMaxY(imgView.frame)+20;
+    }
     
     if(self.news.hasLink){
         UIButton* button = [[UIButton alloc] init];

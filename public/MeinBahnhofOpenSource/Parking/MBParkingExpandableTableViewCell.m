@@ -121,9 +121,14 @@
 
 -(void)addLabelWithTitle:(NSString*)title andText:(NSString*)text{
     if(text.length > 0){
-        MBLabel *addressLabel = [MBLabel labelWithTitle:title andText:text];
+        MBLabel *addressLabel = [MBLabel labelWithTitle:title andText:@""];
         [self.bottomView addSubview:addressLabel];
         [self.labels addObject:addressLabel];
+
+        MBLabel *addressLabel2 = [MBLabel labelWithTitle:@"" andText:text];
+        [self.bottomView addSubview:addressLabel2];
+        [self.labels addObject:addressLabel2];
+
     }
 }
 
@@ -148,10 +153,11 @@
 
     //labels
     NSInteger y = 8;
+    x = 16;
     for(UILabel* label in self.labels){
-        CGSize maxSize = CGSizeMake(self.frame.size.width - 32.0, CGFLOAT_MAX);
+        CGSize maxSize = CGSizeMake(self.frame.size.width - 32.0-x, CGFLOAT_MAX);
         CGSize wrappedSize = [label sizeThatFits:maxSize];
-        label.frame = CGRectMake(8, y, wrappedSize.width, wrappedSize.height);
+        label.frame = CGRectMake(x, y, wrappedSize.width, wrappedSize.height);
         y += label.frame.size.height+8;
     }
 

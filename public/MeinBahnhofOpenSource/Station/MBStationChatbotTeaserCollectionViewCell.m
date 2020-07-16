@@ -90,5 +90,10 @@
     self.mainLabel.frame = CGRectMake(24, 44, size.width,size.height);
     size = [self.subLabel sizeThatFits:CGSizeMake(w, 200)];
     self.subLabel.frame = CGRectMake(24, CGRectGetMaxY(self.mainLabel.frame)+18, size.width,size.height);
+    if(CGRectGetMaxY(self.subLabel.frame) > self.size.height-20){
+        //reduced size (e.g. iPhone5...), must move text up
+        [self.mainLabel setGravityTop:20];
+        [self.subLabel setGravityTop:CGRectGetMaxY(self.mainLabel.frame)+15];
+    }
 }
 @end

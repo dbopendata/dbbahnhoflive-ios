@@ -197,7 +197,11 @@ static NSNumberFormatter * numberFormatter = nil;
 
 - (MBMarker*) markerForParkingWithSelectable:(BOOL)isSelectable
 {
-    MBMarker *marker = [MBMarker markerWithPosition:[self location] andType:PARKING];
+    CLLocationCoordinate2D location = [self location];
+    if(!CLLocationCoordinate2DIsValid(location)){
+        return nil;
+    }
+    MBMarker *marker = [MBMarker markerWithPosition:location andType:PARKING];
     marker.userData = @{@"venue": self, @"isSelectable": [NSNumber numberWithBool:isSelectable]};
     marker.category = @"Individualverkehr";
     marker.secondaryCategory = [self isParkHaus] ? @"Parkhaus" : @"Parkplatz";
@@ -279,7 +283,12 @@ static NSNumberFormatter * numberFormatter = nil;
 -(NSString*)openingTimes{
     NSDictionary* access = [self.serverData db_dictForKey:@"access"];
     NSDictionary* openingHours = [access db_dictForKey:@"openingHours"];
-    return [openingHours db_stringForKey:@"text"];
+    NSString* s = [openingHours db_stringForKey:@"text"];
+    //add linebreaks after ;
+    s = [s stringByReplacingOccurrencesOfString:@";" withString:@";\n"];
+    //ensure that we dont get duplicated linebreaks
+    s = [s stringByReplacingOccurrencesOfString:@";\n\n" withString:@";\n"];
+    return s;
 }
 
 
